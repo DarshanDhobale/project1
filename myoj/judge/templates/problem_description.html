@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>{{ problem.title }}</h1>
+  <p>{{ problem.statement }}</p>
+  <!-- Add any other fields you want to display -->
+
+
+  <form method="POST" action="{% url 'compile_code' problem.id %}">
+    {% csrf_token %}
+    <label for="code">Code:</label>
+    <textarea name="code" id="code" rows="10" cols="50"></textarea>
+    <br>
+    <label for="language">Language:</label>
+    <select name="language" id="language">
+      <option value="python">Python</option>
+      <option value="cpp">C++</option>
+    </select>
+    <br>
+    <input type="submit" value="Run Code">
+  </form>
+{% endblock %}
