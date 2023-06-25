@@ -1,8 +1,9 @@
 from django.contrib import admin
-from .models import Userprofile,Problem,Submission,TestCase,Result
+
+from .models import UserProfile,Problem,Submission,TestCase,Result
 # Register your models here.
 
-admin.site.register(Userprofile)
+admin.site.register(UserProfile)
 admin.site.register(Problem)
 admin.site.register(Submission)
 admin.site.register(TestCase)

@@ -1,9 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import User
-# Create your models here.
+from django.contrib.auth.models import AbstractUser
 
-class Userprofile(models.Model):
-    user= models.OneToOneField(User, on_delete=models.CASCADE)
+class UserProfile(AbstractUser):
+    REQUIRED_FIELDS = ['email', 'total_problems_solved']
 
 class Problem(models.Model):
     title = models.CharField(max_length=255)
@@ -11,7 +10,7 @@ class Problem(models.Model):
 
 class Submission(models.Model):
     problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     code = models.TextField()
     submitted_at = models.DateTimeField(auto_now_add=True)
 
