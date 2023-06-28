@@ -1,16 +1,26 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.db.models.signals import post_save
+from django.contrib.auth.models import User
+# Create your models here.
 
-class UserProfile(AbstractUser):
-    REQUIRED_FIELDS = ['email', 'total_problems_solved']
+class Userprofile(models.Model):
+    user= models.OneToOneField(User, on_delete=models.CASCADE)
+    total_questions= models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.user.username
+    
 
 class Problem(models.Model):
     title = models.CharField(max_length=255)
     statement = models.TextField()
 
+    def __str__(self):
+        return self.title
+
 class Submission(models.Model):
     problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
-    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     code = models.TextField()
     submitted_at = models.DateTimeField(auto_now_add=True)
 

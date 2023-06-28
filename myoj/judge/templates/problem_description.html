@@ -9,6 +9,7 @@
   <form method="POST" action="{% url 'compile_code' problem.id %}">
     {% csrf_token %}
     <label for="code">Code:</label>
+    <br>
     <textarea name="code" id="code" rows="10" cols="50"></textarea>
     <br>
     <label for="language">Language:</label>

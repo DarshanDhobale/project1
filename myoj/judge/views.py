@@ -1,7 +1,10 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
-from .forms import UserLoginForm
+from .forms import UserLoginForm,CodeSubmissionForm
 from django.shortcuts import render, redirect,get_object_or_404
-from .models import Problem 
+from .models import Problem , Submission
+
+
 # Create your views here.
 
 
@@ -29,27 +32,36 @@ def user_login(request):
 #         form = RegistrationForm()
 #     return render(request, 'registration.html', {'form': form})
 
+
 def problems(request):
     problems = Problem.objects.all()  # Retrieve all problems from the Problem model
     return render(request, 'problems.html', {'problems': problems})
+
 
 def problem_description(request, problem_id):
     problem = get_object_or_404(Problem, id=problem_id)
     return render(request, 'problem_description.html', {'problem': problem})
 
+@login_required
 def compile_code(request, problem_id):
-    problem = get_object_or_404(Problem, id=problem_id)
-    
     if request.method == 'POST':
-        code = request.POST.get('code')
-        language = request.POST.get('language')
-        
-        # Execute the user's code based on the selected language
-        # Add your code execution logic here
-        
-        # Store the result or any relevant information for display in the template
-        result = "Code execution result"
-        
-        return render(request, 'compile_result.html', {'problem': problem, 'result': result})
-
-    return render(request, 'problem_description.html', {'problem': problem})
+        form = CodeSubmissionForm(request.POST)
+        if form.is_valid():
+            code = form.cleaned_data['code']
+            user = request.user
+            problem = Problem.objects.get(pk=problem_id)
+            
+            # Create a new Submission instance
+            submission = Submission.objects.create(
+                problem=problem,
+                user=user,
+                code=code
+            )
+            
+            # Perform any additional processing or actions
+            
+            return redirect('compile_result.html')
+    else:
+        form = CodeSubmissionForm()
+    
+    return render(request,'judge/compile_code.html', {'form': form})
