@@ -1,22 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Your Website Title</title>
-  <!-- Include your CSS and JavaScript files here -->
-  {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}"> {% endcomment %}
+  <title>My Website</title>
+  <!-- Include CSS and other static files -->
+  <style>
+    /* Horizontal Navbar */
+    nav ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+    
+    nav ul li {
+      margin-right: 10px;
+    }
+    
+    nav ul li a {
+      text-decoration: none;
+    }
+  </style>
 </head>
 <body>
   <!-- Header -->
   <header>
     <nav>
-      {% comment %} <a href="{% url 'home' %}">Home</a>
-      <a href="{% url 'about' %}">About</a>
-      {% if user.is_authenticated %}
-        <a href="{% url 'logout' %}">Logout</a>
-      {% else %}
-        <a href="{% url 'login' %}">Login</a>
-        <a href="{% url 'register' %}">Register</a>
-      {% endif %} {% endcomment %}
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/problems/">Problems</a></li>
+        <li><a href="/leaderboard/">Leaderboard</a></li>
+        {% if user.is_authenticated %}
+          <li><a href="{% url 'logout' %}">Logout</a></li>
+        {% else %}
+          <li><a href="/login/">Login</a></li>
+          <li><a href="/signup/">Sign Up</a></li>
+        {% endif %}
+      </ul>
     </nav>
   </header>
 

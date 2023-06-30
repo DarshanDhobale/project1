@@ -6,18 +6,21 @@
   <!-- Add any other fields you want to display -->
 
 
+  <h1>Submit Solution</h1>
   <form method="POST" action="{% url 'compile_code' problem.id %}">
     {% csrf_token %}
-    <label for="code">Code:</label>
-    <br>
-    <textarea name="code" id="code" rows="10" cols="50"></textarea>
-    <br>
+    <br><br>
     <label for="language">Language:</label>
     <select name="language" id="language">
-      <option value="python">Python</option>
-      <option value="cpp">C++</option>
+      <option value="C++">C++</option>
+      <option value="Python">Python</option>
+      <option value="Java">Java</option>
     </select>
-    <br>
-    <input type="submit" value="Run Code">
+    <br><br>
+    <label for="code">Code:</label>
+    <textarea name="code" id="code" rows="10" cols="50"></textarea>
+    <br><br>
+    <input type="submit" value="Submit">
   </form>
+    
 {% endblock %}
