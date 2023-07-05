@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>{{ problem.title }}</h1>
+  <p>{{ problem.description }}</p>
+  
+  <h2>Code Execution Result:</h2>
+
+  {% if verdict == "Accepted" %}
+  <h4 class="alert-heading">Accepted :</h4>
+
+  {% elif verdict == "Compilation Error" %}
+  <h4 class="alert-heading">Compilation Error :<pre>{{ user_stderr }}</pre></h4>
+
+  {% elif verdict == "Runtime Error" %}
+  <h4 class="alert-heading">Runtime Error :</h4>
+  <p>Error: {{ error }}</p>
+
+  {% elif verdict == "Time Limit Exceeded" %}
+  <h4 class="alert-heading">Time Limit Exceeded :</h4>
+
+  {% else %}
+  <h4 class="alert-heading">Wrong Answer :</h4>
+  {% endif %}
+{% endblock %}

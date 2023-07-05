@@ -1,4 +1,7 @@
 from django.urls import path
+from django.contrib.staticfiles.urls import static
+from django.conf import settings
+
 from django.contrib.auth import views as auth_views
 from . import views
 
@@ -15,3 +18,7 @@ urlpatterns = [
     path('problems/<int:problem_id>/', views.problem_description, name='problem_description'),
     path('problems/<int:problem_id>/compile/', views.compile_code, name='compile_code'),
 ]
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

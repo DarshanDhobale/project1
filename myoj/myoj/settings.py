@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+from django.conf import settings
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -106,11 +109,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -131,3 +134,22 @@ LOGIN_REDIRECT_URL = 'problems'    #after login our url is redirected to problem
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Define the media root directory
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# URL prefix for media files
+MEDIA_URL = '/media/'
+
+
+
+# Set the DJANGO_SETTINGS_MODULE environment variable
+os.environ['DJANGO_SETTINGS_MODULE'] = 'myoj.settings'
+
+# Configure Django settings
+settings.configure()
+
+# Now you can access the settings
+print(settings.INSTALLED_APPS)
