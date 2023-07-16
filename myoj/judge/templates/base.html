@@ -4,21 +4,18 @@
   <title>My Website</title>
   <!-- Include CSS and other static files -->
   <style>
-    /* Horizontal Navbar */
-    nav ul {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-    }
-    
-    nav ul li {
-      margin-right: 10px;
-    }
-    
-    nav ul li a {
-      text-decoration: none;
-    }
+    /* Reset default styles */
+    *{margin:0;padding:0;box-sizing:border-box}
+    /* Body styles */
+    body{font-family:Arial,sans-serif;line-height:1.5}
+    /* Header styles */
+    header{background-color:#333;color:#fff;padding:10px}
+    header nav ul{list-style-type:none;display:flex}
+    header nav ul li{margin-right:10px}
+    header nav ul li a{text-decoration:none;color:#fff;padding:5px}
+    header nav ul li.active a{background-color:#fff;color:#333}
+    /* Content styles */
+    .content{margin:20px}
   </style>
 </head>
 <body>
@@ -26,9 +23,9 @@
   <header>
     <nav>
       <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/problems/">Problems</a></li>
-        <li><a href="/leaderboard/">Leaderboard</a></li>
+        <li{% if request.path == '/' %} class="active"{% endif %}><a href="/">Home</a></li>
+        <li{% if request.path == '/problems/' %} class="active"{% endif %}><a href="/problems/">Problems</a></li>
+        <li{% if request.path == '/leaderboard/' %} class="active"{% endif %}><a href="/leaderboard/">Leaderboard</a></li>
         {% if user.is_authenticated %}
           <li><a href="{% url 'logout' %}">Logout</a></li>
         {% else %}
@@ -41,8 +38,7 @@
 
   <!-- Content -->
   <div class="content">
-    {% block content %}
-    {% endblock %}
+    {% block content %}{% endblock %}
   </div>
 
   <!-- Footer -->

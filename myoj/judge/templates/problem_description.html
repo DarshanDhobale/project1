@@ -1,15 +1,67 @@
 {% extends 'base.html' %}
 
 {% block content %}
+  <style>
+    h5 {
+      color: rgb(100, 100, 200);
+      font-size: 24px;
+      font-family: Arial, sans-serif;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-family: Arial, sans-serif;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    form {
+      font-family: Arial, sans-serif;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: flex;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    textarea {
+      width: 1000px;
+      height:1000px;
+      padding: 5px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    select {
+      width: 100px;
+      padding: 5px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    input[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+  </style>
+
   <h1>{{ problem.title }}</h1>
   <p>{{ problem.statement }}</p>
   <!-- Add any other fields you want to display -->
 
-
-  <h1>Submit Solution</h1>
+  <h3>Submit Solution</h3>
   <form method="POST" action="{% url 'compile_code' problem.id %}">
     {% csrf_token %}
-    <br><br>
     <label for="language">Language:</label>
     <select name="language" id="language">
       <option value="C++">C++</option>
