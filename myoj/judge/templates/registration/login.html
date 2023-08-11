@@ -58,14 +58,15 @@
   <h2>Login</h2>
   <form method="post">
     {% csrf_token %}
-    <div>
+    {% comment %} <div>
       <label for="{{ form.username.id_for_label }}">Username:</label>
       {{ form.username }}
     </div>
     <div>
       <label for="{{ form.password.id_for_label }}">Password:</label>
       {{ form.password }}
-    </div>
+    </div> {% endcomment %}
+    {{ form.as_p }}
     <button type="submit">Login</button>
   </form>
   {% comment %} <p>Don't have an account? <a href="{% url 'register' %}">Sign up</a></p> {% endcomment %}

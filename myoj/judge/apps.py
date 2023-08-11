@@ -7,4 +7,4 @@ class JudgeConfig(AppConfig):
     name = 'judge'
 
     def ready(self):
-        import judge.signals  # Import signals module
+        import judge.signals  # Import signals module #saving a model instance of userfrofile

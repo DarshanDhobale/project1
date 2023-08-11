@@ -21,6 +21,7 @@ import docker
 def homeview(request):
     return render(request, 'home.html')
 
+#sign is called twice to signup a new
 def signup_view(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -32,31 +33,21 @@ def signup_view(request):
         form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
 
-def user_login(request):
-    if request.method == 'POST':
-
-        docker_client = docker.from_env()
-        form = UserLoginForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect('problems')
-    else:
-        form = UserLoginForm()
-    return render(request, 'login.html', {'form': form})
-
-# def register(request):
+# def user_login(request):
 #     if request.method == 'POST':
-#         form = RegistrationForm(request.POST)
+
+#         form = UserLoginForm(request.POST)
 #         if form.is_valid():
-#             form.save()
-#             return redirect('login')
-#     else:
-#         form = RegistrationForm()
-#     return render(request, 'registration.html', {'form': form})
+#             username = form.cleaned_data['username']
+#             password = form.cleaned_data['password']
+#             user = authenticate(username=username, password=password)
+#             if user is not None:
+#                 login(request, user)
+#                 return redirect('problems')
+#     else: # request.method is GET , like login/ 
+#         form = UserLoginForm()
+#     return render(request, 'login.html', {'form': form})
+
 
 def logout_view(request):
     logout(request)
@@ -115,6 +106,15 @@ def compile_code(request, problem_id):
             clean = f"{filename} {filename}.cpp"
             docker_img = "gcc"
             exe = f"./{filename}"
+
+        elif language == "Python":
+            extension = ".py"
+            cont_name = "jovial_liskov"
+            compile = "python"
+            clean = f"{filename}.py"
+            docker_img = "python"
+            exe = f"python {filename}.py"
+        
         
         file = filename + extension
         filepath = os.path.join(settings.MEDIA_ROOT, file)
@@ -129,7 +129,6 @@ def compile_code(request, problem_id):
 
         try:
             container = docker_client.containers.get(cont_name)
-            print('8')
             container_state = container.attrs['State']
             container_is_running = (container_state['Status'] == Running)
             if not container_is_running:
@@ -210,7 +209,6 @@ def compile_code(request, problem_id):
         print('21')
         previous_verdict = Submission.objects.filter(user=user.id, problem=problem, verdict="Accepted")
         if len(previous_verdict)==0 and verdict=="Accepted":
-            print('22')
             user_profile.total_score += score
             user_profile.total_solved += 1
             # if problem.difficulty == "Easy":
@@ -226,7 +224,6 @@ def compile_code(request, problem_id):
         submission.user_stderr = user_stderr
         submission.run_time = run_time
         submission.save()
-        print('23')
         os.remove(filepath)
         context = {'verdict': verdict, 'user_stderr': user_stderr ,'user_stdout':user_stdout}
         return render(request,'result.html',context)
