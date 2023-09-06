@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>My Website</title>
+  <title>Code Master</title>
   <!-- Include CSS and other static files -->
   <style>
     /* Reset default styles */
@@ -28,6 +28,8 @@
         <li{% if request.path == '/leaderboard/' %} class="active"{% endif %}><a href="/leaderboard/">Leaderboard</a></li>
         {% if user.is_authenticated %}
           <li><a href="{% url 'logout' %}">Logout</a></li>
+          <li{% if request.path == '/dashboard/' %} class="active"{% endif %}><a href="/dashboard/">Dashboard</a></li>
+          <li style="margin-left: auto;">{{user.username}}<li>
         {% else %}
           <li><a href="/login/">Login</a></li>
           <li><a href="/signup/">Sign Up</a></li>

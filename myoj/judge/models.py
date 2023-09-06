@@ -12,6 +12,9 @@ class Userprofile(models.Model):#models is a module provided by Django that cont
     def __str__(self):
         return self.user.username
     
+    class Meta:
+        ordering = ['-total_score']
+    
 
 class Problem(models.Model):
     DIFFICULTY_CHOICES = [('Easy', 'Easy'),('Medium', 'Medium'),('Hard', 'Hard'),] #(value ,human readable) value is used when querying

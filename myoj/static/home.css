@@ -1,0 +1,82 @@
+/* Reset some default browser styles */
+body, h1, h2, p, a {
+    margin: 0;
+    padding: 0;
+}
+
+/* General styles */
+.container {
+    max-width: 80vw; /* Adjusted max-width using vw units */
+    margin: 0 auto;
+    padding: 2vw; /* Adjusted padding using vw units */
+}
+
+/* Hero section */
+.hero {
+    padding: 10vw 0; /* Adjusted padding using vw units */
+    text-align: center;
+    background-image: url('/media/pics/homepic.webp');
+    opacity: 0.3;
+    background-size: cover;
+    background-position: center;
+}
+
+.hero-content {
+    position: absolute;
+    top: 10vw; /* Adjusted top position using vw units */
+    left: 15vw; /* Adjusted left position using vw units */
+    text-align: center;
+    opacity: 1;
+    color: rgb(12, 12, 11);
+    max-width: 60vw; /* Adjusted max-width using vw units */
+    margin: 0 auto;
+}
+
+.btn {
+    display: inline-block;
+    padding: 1vw 2vw; /* Adjusted padding using vw units */
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 1vw; /* Adjusted border-radius using vw units */
+    text-decoration: none;
+    margin-top: 2vw; /* Adjusted margin-top using vw units */
+}
+
+.btn-secondary {
+    background-color: #26d273;
+}
+
+/* Features section */
+.features {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5vw; /* Adjusted margin-top using vw units */
+}
+
+.feature {
+    flex: 1;
+    padding: 2vw; /* Adjusted padding using vw units */
+    text-align: center;
+}
+
+.feature h2 {
+    margin-top: 1vw; /* Adjusted margin-top using vw units */
+}
+
+/* Adjusting using vw units */
+.icon-wrapper {
+    width: 10vw; /* Adjusted width using vw units */
+    height: 10vw; /* Adjusted height using vw units */
+    background-color: #007bff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 2vw; /* Adjusted margin using vw units */
+}
+
+.feature-icon {
+    width: 8vw; /* Adjusted width using vw units */
+    height: 8vw; /* Adjusted height using vw units */
+    border-radius: 50%;
+}

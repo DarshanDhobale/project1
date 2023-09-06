@@ -1,0 +1,66 @@
+/* Reset some default styles */
+body, h1, h2, h3, h4, h5, h6, p, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+/* Add some basic styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.leaderboard {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.leaderboard-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.leaderboard-list {
+    list-style: none;
+}
+
+.leaderboard-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.rank {
+    font-size: 14px;
+    font-weight: bold;
+    color: #555;
+    margin-right: 10px;
+    width: 30px;
+    text-align: center;
+}
+
+.username {
+    margin-right: auto;
+    margin-left: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+.total-score {
+    font-weight: bold;
+    color: #2ecc71;
+}
+
+/* Add more styling as needed */

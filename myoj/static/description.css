@@ -1,0 +1,62 @@
+body {
+    font-family: Arial, sans-serif;
+  }
+  
+  .problem-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .problem-title {
+    color: rgb(100, 100, 200);
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .problem-statement {
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+  
+  .solution-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .solution-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .solution-form select,
+  .solution-form textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  
+  .solution-form textarea {
+    height: 200px;
+  }
+  
+  .solution-form input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .solution-form input[type="submit"]:hover {
+    background-color: #45a049;
+  }
+  

@@ -1,78 +1,29 @@
 {% extends 'base.html' %}
+{%load static%}
 
 {% block content %}
-  <style>
-    h5 {
-      color: rgb(100, 100, 200);
-      font-size: 24px;
-      font-family: Arial, sans-serif;
-      margin-bottom: 20px;
-    }
+<link rel="stylesheet" href="{% static 'description.css' %}">
+  <div class="problem-container">
+    <h1 class="problem-title">{{ problem.title }}</h1>
+    <p class="problem-statement">{{ problem.statement }}</p>
+    <!-- Add any other fields you want to display -->
 
-    p {
-      font-family: Arial, sans-serif;
-      line-height: 1.5;
-      margin-bottom: 20px;
-    }
-
-    form {
-      font-family: Arial, sans-serif;
-      margin-bottom: 20px;
-    }
-
-    label {
-      display: flex;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-    textarea {
-      width: 1000px;
-      height:1000px;
-      padding: 5px;
-      font-size: 14px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    select {
-      width: 100px;
-      padding: 5px;
-      font-size: 14px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    input[type="submit"] {
-      background-color: #4CAF50;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    input[type="submit"]:hover {
-      background-color: #45a049;
-    }
-  </style>
-
-  <h1>{{ problem.title }}</h1>
-  <p>{{ problem.statement }}</p>
-  <!-- Add any other fields you want to display -->
-
-  <h3>Submit Solution</h3>
-  <form method="POST" action="{% url 'compile_code' problem.id %}">
-    {% csrf_token %}
-    <label for="language">Language:</label>
-    <select name="language" id="language">
-      <option value="C++">C++</option>
-      <option value="Python">Python</option>
-      <option value="Java">Java</option>
-    </select>
-    <br><br>
-    <label for="code">Code:</label>
-    <textarea name="code" id="code" rows="10" cols="50"></textarea>
-    <br><br>
-    <input type="submit" value="Submit">  {% comment %} submits form values to form handler {% endcomment %}
-  </form>
-    
+    <h3 class="solution-title">Submit Solution</h3>
+    <form method="POST" action="{% url 'compile_code' problem.id %}" class="solution-form">
+      {% csrf_token %}
+      <label for="language" class="form-label">Language:</label>
+      <select name="language" id="language" class="form-select">
+        <option value="C++">C++</option>
+        <option value="Python">Python</option>
+        <option value="Java">Java</option>
+      </select>
+      <br><br>
+      <label for="code" class="form-label">Code:</label>
+      <textarea name="code" id="code" rows="10" cols="50" class="form-textarea"></textarea>
+      <br><br>
+      <input type="submit" value="Submit" class="form-submit">
+    </form>
+  </div>
 {% endblock %}
+
+{% comment %} //label and id are associated for frontend and name is to match with the attributes on the server side {% endcomment %}

@@ -15,6 +15,8 @@ urlpatterns = [
     path('signup/', views.signup_view, name='signup'),
     path('logout/', views.logout_view, name='logout'),
     path('problems/', views.problems, name='problems'),
+    path('leaderboard/', views.leaderboard, name='leaderboaed'),
+     path('dashboard/', views.dashboard, name='dashboard'),
     path('problems/<int:problem_id>/', views.problem_description, name='problem_description'),
     path('problems/<int:problem_id>/compile/', views.compile_code, name='compile_code'),
 ]
@@ -22,3 +24,4 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

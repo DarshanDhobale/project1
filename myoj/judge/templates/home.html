@@ -1,13 +1,36 @@
 {% extends 'base.html' %}
-
-
-
+{% load static %}
 {% block content %}
-  <h3>Welcome to My Website</h3>
-  <!-- Add your home page content here -->
-  {% if user.is_authenticated %}
-    <h5>Welcome, {{ user.username }}!</h5>
-  {% else %}
-    <p>Please login or sign up to continue.</p>
-  {% endif %}
+<link rel="stylesheet" href="{% static 'home.css' %}">
+  <div class="hero" >
+    
+  </div>
+  <div class="hero-content">
+    <h1>Welcome to CodeMaster</h1>
+    <p>Sharpen your coding skills and ace your technical interviews!</p>
+    {% if user.is_authenticated %}
+      <a href="{% url 'problems' %}" class="btn btn-primary">Start Coding</a>
+    {% else %}
+      <a href="{% url 'signup' %}" class="btn btn-secondary">Sign Up Now</a>
+      <p>Already have an account? <a href="{% url 'login' %}">Log In</a></p>
+    {% endif %}
+  </div>
+
+  <div class="features">
+    <div class="feature">
+      <img src="/media/pics/coding.png" alt="Coding Icon" class="feature-icon">
+      <h2>Practice Coding</h2>
+      <p>Hone your skills by solving a wide range of coding challenges.</p>
+    </div>
+    <div class="feature">
+      <img src="/media/pics/interview.png" alt="Community Icon" class="feature-icon">
+      <h2>Prepare Interviews</h2>
+      <p>Get ready for technical interviews with real-world coding problems.</p>
+    </div>
+    <div class="feature">
+      <img src="/media/pics/codingcommunity.jfif" alt="Community Icon" class="feature-icon">
+      <h2>Join the Community</h2>
+      <p>Connect with fellow developers, share knowledge, and learn together.</p>
+    </div>
+  </div>
 {% endblock %}

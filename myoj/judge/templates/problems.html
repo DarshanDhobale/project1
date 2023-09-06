@@ -1,78 +1,17 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-  <style>
-    a {
-      text-decoration: none;
-    }
-
-    .container {
-      border: 1px solid #ccc; /* Add border style */
-      padding: 20px; /* Add padding for spacing */
-      width: 500px;
-      display: inline-flex;
-      flex-direction: column;
-      text-align: left;
-      margin: 0 auto; /* Center horizontally */
-    }
-
-    .pagetitle {
-      color: rgb(100, 100, 200);
-      font-size: 40px;
-      font-family: Arial, Helvetica, sans-serif;
-      margin-bottom:0;
-    }
-
-    .problem {
-      border: 2px solid #ccc; /* Add border style */
-      border-radius : 15px;
-      padding: 10px; /* Add padding for spacing */
-      width: 450px;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin: 10px 0;
-    }
-    .problem:hover {
-      background-color: #e6e6e6;
-      action
-    }
-    .problem:active {
-      background-color: #bfbfbf; /* Change to the desired color */
-    }
-    .problem .title {
-    text-decoration: none; /* Remove underline */
-    color: inherit; /* Inherit the color from the parent */
-  }
-
-    .problemname {
-      color: rgb(100, 100, 200);
-      font-size: 20px;
-      font-family: Arial, Helvetica, sans-serif;
-      margin-right: 10px;
-      margin-bottom:0;
-    }
-
-    .difficulty {
-      border: 1px solid #ccc;
-      border-radius : 8px;
-      width: 70px; 
-      color: black;
-      background-color : rgb(255, 255, 153);
-      font-size: 16px;
-      font-family: Arial, Helvetica, sans-serif;
-      text-align: center;
-      
-    }
-  </style>
-
+<link rel="stylesheet" href="{% static 'problems.css' %}">
   <div class="container">
     <h1 class="pagetitle">Problems</h1>
-    <ul>
+    <ul class="problem-list">
       {% for problem in problems %}
         <li class="problem">
-          <span class="problemname"><a href="{% url 'problem_description' problem.id %}">{{ problem.title }}</a></span>
-          <span class="difficulty">{{ problem.difficulty }}</span>
+          <a href="{% url 'problem_description' problem.id %}" class="problem-link">
+            <span class="problem-name">{{ problem.title }}</span>
+            <span class="difficulty">{{ problem.difficulty }}</span>
+          </a>
         </li>
       {% endfor %}
     </ul>

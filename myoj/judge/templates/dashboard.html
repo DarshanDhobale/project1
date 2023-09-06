@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <link rel="stylesheet" href="{% static 'dashboard.css' %}">
+  <div class="container">
+    <div class="profile-card">
+      <div class="profile-header">
+        <h1>My Profile</h1>
+      </div>
+      <div class="profile-info">
+        <p><span>Username:</span> <span id="username">{{ user_profile.user.username }}</span></p>
+        <p><span>Total Solved:</span> <span id="total-solved">{{ user_profile.total_solved }}</span></p>
+        <p><span>Total Score:</span> <span id="total-score">{{ user_profile.total_score }}</span></p>
+      </div>
+    </div>
+  </div>
+  {% endblock %}
+

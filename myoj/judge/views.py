@@ -28,25 +28,10 @@ def signup_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('problems')  # Replace 'home' with the desired URL name to redirect after successful signup
+            return redirect('problems')  # Replace 'problems' with the desired URL name to redirect after successful signup
     else:
         form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
-
-# def user_login(request):
-#     if request.method == 'POST':
-
-#         form = UserLoginForm(request.POST)
-#         if form.is_valid():
-#             username = form.cleaned_data['username']
-#             password = form.cleaned_data['password']
-#             user = authenticate(username=username, password=password)
-#             if user is not None:
-#                 login(request, user)
-#                 return redirect('problems')
-#     else: # request.method is GET , like login/ 
-#         form = UserLoginForm()
-#     return render(request, 'login.html', {'form': form})
 
 
 def logout_view(request):
@@ -58,10 +43,18 @@ def problems(request):
     problems = Problem.objects.all()  # Retrieve all problems from the Problem model
     return render(request, 'problems.html', {'problems': problems})
 
-
+@login_required(redirect_field_name="login")
 def problem_description(request, problem_id):
     problem = get_object_or_404(Problem, id=problem_id)
     return render(request, 'problem_description.html', {'problem': problem})
+
+def leaderboard(request):
+    objects=Userprofile.objects.all()
+    return render(request, 'leaderboard.html', {'objects': objects})
+
+def dashboard(request):
+    user_profile = Userprofile.objects.get(user=request.user)
+    return render(request, 'dashboard.html', {'user_profile': user_profile})
 
 @login_required(redirect_field_name="login")
 def compile_code(request, problem_id):
@@ -102,7 +95,7 @@ def compile_code(request, problem_id):
         if language == "C++":
             extension = ".cpp"
             cont_name = "suspicious_grothendiec"
-            compile = f"g++ -o {filename} {filename}.cpp"
+            compile = f"g++ -o {filename} {filename}.cpp" #f is used to embed expressions inside string
             clean = f"{filename} {filename}.cpp"
             docker_img = "gcc"
             exe = f"./{filename}"
@@ -132,15 +125,13 @@ def compile_code(request, problem_id):
             container_state = container.attrs['State']
             container_is_running = (container_state['Status'] == Running)
             if not container_is_running:
-                print('9')
                 subprocess.run(f"docker start {cont_name}",shell=True)
         except docker.errors.NotFound:
             subprocess.run(f"docker run -dt --name {cont_name} {docker_img}",shell=True)
-            print('10')
 
-        # copy/paste the .cpp file in docker container 
+
+        # copy/paste the  file in docker container 
         subprocess.run(f"docker cp {filepath} {cont_name}:/{file}",shell=True)
-        print('11')
         # compiling the code
         cmp = subprocess.run(f"docker exec {cont_name} {compile}", capture_output=True, shell=True)
         if cmp.returncode != 0:
@@ -160,10 +151,8 @@ def compile_code(request, problem_id):
                           ]
                 res = subprocess.run(command, capture_output=True, timeout=problem.time_limit, shell=True)
                 run_time = time()-start
-                print('12')
                 subprocess.run(f"docker exec {cont_name} rm {clean}",shell=True)
             except subprocess.TimeoutExpired:
-                print('13')
                 run_time = time()-start
                 verdict = "Time Limit Exceeded"
                 subprocess.run(f"docker container kill {cont_name}", shell=True)
@@ -185,18 +174,25 @@ def compile_code(request, problem_id):
         user_stdout = ""
         if verdict == "Compilation Error":
             user_stderr = cmp.stderr.decode('utf-8')
-            print('17')
+            
         elif verdict == "Wrong Answer":
             user_stdout = res.stdout.decode('utf-8')
-            print('18')
+            
             if str(user_stdout)==str(testcase.expected_output):
                 verdict = "Accepted"
-                print('19')
+                
             testcase.expected_output += '\n' # added extra line to compare user output having extra ling at the end of their output
             if str(user_stdout)==str(testcase.expected_output):
                 verdict = "Accepted"
-                print('20')
-
+        
+        if os.path.exists(filepath):
+            try:
+                os.remove(filepath)
+                print(f"File removed successfully: {filepath}")
+            except Exception as e:
+                print(f"Error removing file: {e}")
+        else:
+            print(f"File does not exist: {filepath}")
 
         # Assuming you have the username of the currently logged-in user
         username = request.user  # Replace with the actual username
@@ -206,17 +202,11 @@ def compile_code(request, problem_id):
 
         # Fetch the UserProfile associated with the User
         user_profile = Userprofile.objects.get(user=user)
-        print('21')
+
         previous_verdict = Submission.objects.filter(user=user.id, problem=problem, verdict="Accepted")
         if len(previous_verdict)==0 and verdict=="Accepted":
             user_profile.total_score += score
             user_profile.total_solved += 1
-            # if problem.difficulty == "Easy":
-            #     user.easy_solve_count += 1
-            # elif problem.difficulty == "Medium":
-            #     user.medium_solve_count += 1
-            # else:
-            #     user.tough_solve_count += 1
             user_profile.save()
 
         submission.verdict = verdict
@@ -224,6 +214,5 @@ def compile_code(request, problem_id):
         submission.user_stderr = user_stderr
         submission.run_time = run_time
         submission.save()
-        os.remove(filepath)
         context = {'verdict': verdict, 'user_stderr': user_stderr ,'user_stdout':user_stdout}
         return render(request,'result.html',context)
